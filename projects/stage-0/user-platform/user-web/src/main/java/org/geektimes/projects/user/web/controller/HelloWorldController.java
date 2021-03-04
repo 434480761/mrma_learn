@@ -5,6 +5,7 @@ import org.geektimes.web.mvc.controller.PageController;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
 import javax.ws.rs.GET;
+import javax.ws.rs.HttpMethod;
 import javax.ws.rs.POST;
 import javax.ws.rs.Path;
 
@@ -16,9 +17,10 @@ public class HelloWorldController implements PageController {
 
     @Override
     @GET
-//  @POST
     @Path("/world") // /hello/world -> HelloWorldController
     public String execute(HttpServletRequest request, HttpServletResponse response) throws Throwable {
+        System.out.println("进入controller HelloWorldController" );
         return "index.jsp";
+        //return "login-form.jsp";
     }
 }

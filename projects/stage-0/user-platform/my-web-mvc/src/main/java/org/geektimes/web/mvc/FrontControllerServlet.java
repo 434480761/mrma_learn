@@ -19,6 +19,7 @@ import java.lang.annotation.Annotation;
 import java.lang.reflect.Method;
 import java.util.*;
 
+
 import static java.util.Arrays.asList;
 import static org.apache.commons.lang.StringUtils.substringAfter;
 
@@ -42,6 +43,18 @@ public class FrontControllerServlet extends HttpServlet {
     @Override
     public void init(ServletConfig servletConfig) {
         initHandleMethods();
+
+        //System.out.println("controllersMapping = " + controllersMapping.toString());
+        //for (Entry<String, HandlerMethodInfo> stringHandlerMethodInfoEntry : handleMethodInfoMapping.entrySet()) {
+        //    System.out.println("mapping = " + stringHandlerMethodInfoEntry.getKey());
+        //    System.out.println(new StringBuilder()
+        //        .append("method = ")
+        //        .append(stringHandlerMethodInfoEntry.getValue().getHandlerMethod().toString())
+        //        .append("requestPath")
+        //        .append(stringHandlerMethodInfoEntry.getValue().getRequestPath())
+        //        .append("supportedHttpMethods")
+        //        .append(stringHandlerMethodInfoEntry.getValue().getSupportedHttpMethods().toString().toString()));
+        //}
     }
 
     /**
@@ -104,11 +117,11 @@ public class FrontControllerServlet extends HttpServlet {
             throws ServletException, IOException {
         // 建立映射关系
         // requestURI = /a/hello/world
-        String requestURI = request.getRequestURI();
-        System.out.println("requestURI = " + requestURI);
         // contextPath  = /a or "/" or ""
+        String requestURI = request.getRequestURI();
         String servletContextPath = request.getContextPath();
         String prefixPath = servletContextPath;
+
         // 映射路径（子路径）
         String requestMappingPath = substringAfter(requestURI,
                 StringUtils.replace(prefixPath, "//", "/"));
@@ -116,6 +129,7 @@ public class FrontControllerServlet extends HttpServlet {
         Controller controller = controllersMapping.get(requestMappingPath);
 
         if (controller != null) {
+            System.out.println("找到映射的controller");
 
             HandlerMethodInfo handlerMethodInfo = handleMethodInfoMapping.get(requestMappingPath);
 
@@ -131,6 +145,8 @@ public class FrontControllerServlet extends HttpServlet {
                     }
 
                     if (controller instanceof PageController) {
+                        System.out.println("进入到pageController");
+
                         PageController pageController = PageController.class.cast(controller);
                         String viewPath = pageController.execute(request, response);
                         // 页面请求 forward
@@ -150,6 +166,13 @@ public class FrontControllerServlet extends HttpServlet {
                         // TODO
                     }
 
+
+                    System.out.println("requestURI = " + requestURI);
+                    System.out.println("servletContextPath = " + servletContextPath);
+                    System.out.println("requestMappingPath = " + requestMappingPath);
+
+                    System.out.println("httpMethod = " + httpMethod);
+
                 }
             } catch (Throwable throwable) {
                 if (throwable.getCause() instanceof IOException) {
@@ -159,6 +182,7 @@ public class FrontControllerServlet extends HttpServlet {
                 }
             }
         }
+
     }
 
 //    private void beforeInvoke(Method handleMethod, HttpServletRequest request, HttpServletResponse response) {
