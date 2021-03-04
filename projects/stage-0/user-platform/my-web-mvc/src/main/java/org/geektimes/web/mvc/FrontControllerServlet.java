@@ -159,6 +159,7 @@ public class FrontControllerServlet extends HttpServlet {
                         if (!viewPath.startsWith("/")) {
                             viewPath = "/" + viewPath;
                         }
+                        System.out.println("dispatch viewPath = " + viewPath);
                         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(viewPath);
                         requestDispatcher.forward(request, response);
                         return;
