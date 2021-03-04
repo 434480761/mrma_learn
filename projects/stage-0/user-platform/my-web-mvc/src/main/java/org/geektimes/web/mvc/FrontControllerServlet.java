@@ -4,19 +4,14 @@ import org.apache.commons.lang.StringUtils;
 import org.geektimes.web.mvc.controller.Controller;
 import org.geektimes.web.mvc.controller.PageController;
 import org.geektimes.web.mvc.controller.RestController;
-import org.geektimes.web.mvc.header.CacheControlHeaderWriter;
-import org.geektimes.web.mvc.header.annotation.CacheControl;
 
 import javax.servlet.RequestDispatcher;
 import javax.servlet.ServletConfig;
 import javax.servlet.ServletContext;
 import javax.servlet.ServletException;
-import javax.servlet.annotation.WebServlet;
 import javax.servlet.http.HttpServlet;
 import javax.servlet.http.HttpServletRequest;
 import javax.servlet.http.HttpServletResponse;
-import javax.ws.rs.DELETE;
-import javax.ws.rs.GET;
 import javax.ws.rs.HttpMethod;
 import javax.ws.rs.Path;
 import java.io.IOException;
@@ -110,6 +105,7 @@ public class FrontControllerServlet extends HttpServlet {
         // 建立映射关系
         // requestURI = /a/hello/world
         String requestURI = request.getRequestURI();
+        System.out.println("requestURI = " + requestURI);
         // contextPath  = /a or "/" or ""
         String servletContextPath = request.getContextPath();
         String prefixPath = servletContextPath;
@@ -143,6 +139,7 @@ public class FrontControllerServlet extends HttpServlet {
                         // ServletContext -> RequestDispatcher forward
                         // ServletContext -> RequestDispatcher 必须以 "/" 开头
                         ServletContext servletContext = request.getServletContext();
+
                         if (!viewPath.startsWith("/")) {
                             viewPath = "/" + viewPath;
                         }
