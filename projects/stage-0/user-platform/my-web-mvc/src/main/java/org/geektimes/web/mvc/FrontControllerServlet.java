@@ -159,18 +159,26 @@ public class FrontControllerServlet extends HttpServlet {
                         if (!viewPath.startsWith("/")) {
                             viewPath = "/" + viewPath;
                         }
-                        System.out.println("dispatch viewPath = " + viewPath);
                         RequestDispatcher requestDispatcher = servletContext.getRequestDispatcher(viewPath);
                         requestDispatcher.forward(request, response);
+
+                        System.out.println("inside servletContextPath = " + servletContextPath);
+                        System.out.println("inside requestURI = " + requestURI);
+                        System.out.println("inside requestMappingPath = " + requestMappingPath);
+                        System.out.println("httpMethod = " + httpMethod);
+                        System.out.println("inside controller = " + controller.getClass().getName());
+                        System.out.println("inside dispatch viewPath = " + viewPath);
+
+
                         return;
                     } else if (controller instanceof RestController) {
                         // TODO
                     }
 
 
-                    System.out.println("requestURI = " + requestURI);
-                    System.out.println("servletContextPath = " + servletContextPath);
-                    System.out.println("requestMappingPath = " + requestMappingPath);
+                    System.out.println("outside requestURI = " + requestURI);
+                    System.out.println("outside servletContextPath = " + servletContextPath);
+                    System.out.println("outside requestMappingPath = " + requestMappingPath);
 
                     System.out.println("httpMethod = " + httpMethod);
 
